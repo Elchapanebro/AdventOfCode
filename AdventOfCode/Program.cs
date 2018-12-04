@@ -1,20 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using AdventOfCode.Utilities;
 
 namespace AdventOfCode
 {
     internal sealed class Program
     {
-        private static List<ITask> _tasks = new List<ITask>();
+        private const double TargetNfr = 7.5;
+
+        private static readonly List<ITask> Tasks = new List<ITask>();
+
+        private static readonly Stopwatch Stopwatch = new Stopwatch();
+
         static void Main(string[] args)
         {
             Load();
 
             while (true)
             {
-                Console.WriteLine("Please enter Day & Task to execute:");
+                Console.WriteLine("\r\nPlease enter Day & Task to execute:");
                 string[] arguments = Console.ReadLine()?.Split(" ") ?? new string[0];
 
                 if (arguments.Length == 1 && arguments[0].Equals("exit", StringComparison.CurrentCultureIgnoreCase))
@@ -26,12 +33,10 @@ namespace AdventOfCode
                     && int.TryParse(arguments[0], out int day) 
                     && int.TryParse(arguments[1], out int taskNumber))
                 {
-                    var task = _tasks.SingleOrDefault(t => t.Day == day && t.TaskNumber == taskNumber);
+                    var task = Tasks.SingleOrDefault(t => t.Day == day && t.TaskNumber == taskNumber);
                     if (task != null)
                     {
-
-                        var result = task.Execute();
-                        Console.WriteLine($"Day {day}, Task {taskNumber} Result:\r\n{result}");
+                        StartTaskWithInstrumentation(task);
                     }
                     else
                     {
@@ -45,12 +50,48 @@ namespace AdventOfCode
             }
         }
 
+        static void StartTaskWithInstrumentation(ITask task)
+        {
+            try
+            {
+                Console.Clear();
+                Console.WriteLine($"Executing Day {task.Day}, Task {task.TaskNumber}...");
+
+                Stopwatch.Start();
+
+                var result = task.Execute();
+
+                Stopwatch.Stop();
+
+                Console.WriteLine(
+                    $"Day {task.Day}, Task {task.TaskNumber} Result:\r\n{result}\r\nElapsed Time: {Stopwatch.Elapsed.TotalSeconds} seconds");
+
+                Clipboard.CopyToClipboard(result.ToString());
+
+                if (Stopwatch.Elapsed.TotalSeconds > TargetNfr)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.WriteLine($"\r\nTask took longer than set threshold of {TargetNfr}");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"An error occured during the running of Day {task.Day}, Task {task.TaskNumber}:\r\n\r\n{e}");
+            }
+            finally
+            {
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Stopwatch.Reset();
+            }
+        }
+
         static void Load()
         {
             foreach (var t in Assembly.GetExecutingAssembly().GetTypes()
                 .Where(t => t.GetInterfaces().Any(i => i == typeof(ITask))))
             {
-                _tasks.Add((ITask)Activator.CreateInstance(t));
+                Tasks.Add((ITask)Activator.CreateInstance(t));
             }
         }
     }

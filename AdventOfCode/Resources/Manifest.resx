@@ -121,13 +121,76 @@
   <data name="Day1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>day1.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="Day10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day10.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day11" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day11.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day12" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day12.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day13" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day13.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day14" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day14.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day15" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day15.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day16.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day17" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day17.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day18" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day18.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day19" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day19.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="Day2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>day2.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Day20" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day20.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day21" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day21.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day22" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day22.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day23" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day23.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day24.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day25" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day25.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Day3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>day3.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="Day4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>day4.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Day5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day5.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day6.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day7.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day8.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Day9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>day9.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>
