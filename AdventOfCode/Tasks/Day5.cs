@@ -1,4 +1,7 @@
-﻿using AdventOfCode.Resources;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using AdventOfCode.Resources;
 
 namespace AdventOfCode.Tasks
 {
@@ -8,13 +11,9 @@ namespace AdventOfCode.Tasks
         public int TaskNumber => 1;
         public object Execute()
         {
-            var list = Manifest.Day5.Split("\r\n");
-            foreach (var item in list)
-            {
-                
-            }
+            var result = Day5Helper.ReactPolymer(Manifest.Day5);
 
-            return "NOT IMPLEMENTED";
+            return result.Length;
         }
     }
 
@@ -24,13 +23,74 @@ namespace AdventOfCode.Tasks
         public int TaskNumber => 2;
         public object Execute()
         {
-            var list = Manifest.Day5.Split("\r\n");
-            foreach (var item in list)
-            {
+            var letters = Manifest.Day5.ToLower().Distinct();
 
+            var results = new Dictionary<char, int>();
+
+            foreach (char letter in letters)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine($"Removing Unit {letter}/{char.ToUpper(letter)}");
+
+                var result = Day5Helper.ReactPolymer(
+                    Manifest.Day5
+                        .Replace(letter.ToString(), string.Empty)
+                        .Replace(char.ToUpper(letter).ToString(), string.Empty));
+
+                results.Add(letter, result.Length);
             }
 
-            return "NOT IMPLEMENTED";
+            return results.Values.OrderBy(x => x).First();
+        }
+    }
+
+    internal sealed class Day5Helper
+    {
+        public static string ReactPolymer(string input)
+        {
+            var polymer = input;
+
+            int pass = 1;
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+
+            while (true)
+            {
+                int count = 0;
+                for (int i = 0; i < polymer.Length; i++)
+                {
+                    var nextIndex = i + 1;
+                    if (nextIndex >= polymer.Length)
+                    {
+                        //End Of File Reached
+                        break;
+                    }
+
+                    var thisPoly = polymer[i];
+                    var nextPoly = polymer[nextIndex];
+
+                    if (char.ToUpper(thisPoly) == char.ToUpper(nextPoly)
+                        && ((char.IsUpper(thisPoly) && char.IsLower(nextPoly))
+                            || (char.IsUpper(nextPoly) && char.IsLower(thisPoly))))
+                    {
+                        polymer = polymer.Remove(i, 2);
+                        i = i - 2;
+                        if (i < 0) i = 0;
+                        count++;
+                    }
+                }
+
+                if (count == 0)
+                {
+                    break;
+                }
+
+                Console.WriteLine($"Found {count} reaction(s) on pass {pass}");
+                pass++;
+            }
+
+            Console.ResetColor();
+
+            return polymer;
         }
     }
 }
