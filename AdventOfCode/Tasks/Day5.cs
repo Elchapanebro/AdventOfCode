@@ -50,44 +50,32 @@ namespace AdventOfCode.Tasks
         {
             var polymer = input;
 
-            int pass = 1;
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-
-            while (true)
+            int count = 0;
+            for (int i = 0; i < polymer.Length; i++)
             {
-                int count = 0;
-                for (int i = 0; i < polymer.Length; i++)
+                var nextIndex = i + 1;
+                if (nextIndex >= polymer.Length)
                 {
-                    var nextIndex = i + 1;
-                    if (nextIndex >= polymer.Length)
-                    {
-                        //End Of File Reached
-                        break;
-                    }
-
-                    var thisPoly = polymer[i];
-                    var nextPoly = polymer[nextIndex];
-
-                    if (char.ToUpper(thisPoly) == char.ToUpper(nextPoly)
-                        && ((char.IsUpper(thisPoly) && char.IsLower(nextPoly))
-                            || (char.IsUpper(nextPoly) && char.IsLower(thisPoly))))
-                    {
-                        polymer = polymer.Remove(i, 2);
-                        i = i - 2;
-                        if (i < 0) i = 0;
-                        count++;
-                    }
-                }
-
-                if (count == 0)
-                {
+                    //End Of File Reached
                     break;
                 }
 
-                Console.WriteLine($"Found {count} reaction(s) on pass {pass}");
-                pass++;
+                var thisPoly = polymer[i];
+                var nextPoly = polymer[nextIndex];
+
+                if (char.ToUpper(thisPoly) == char.ToUpper(nextPoly)
+                    && ((char.IsUpper(thisPoly) && char.IsLower(nextPoly))
+                        || (char.IsUpper(nextPoly) && char.IsLower(thisPoly))))
+                {
+                    polymer = polymer.Remove(i, 2);
+                    i = i - 2;
+                    if (i < 0) i = -1;
+                    count++;
+                }
             }
 
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine($"Found {count} reaction(s)");
             Console.ResetColor();
 
             return polymer;

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using AdventOfCode.Resources;
 
@@ -14,35 +12,14 @@ namespace AdventOfCode.Tasks
         public int TaskNumber => 1;
         public object Execute()
         {
-            var conflictedPoints = new List<Point>();
-            var claims = new List<Claim>();
+            var claims = new HashSet<Claim>();
 
             foreach (var line in Manifest.Day3.Split("\r\n"))
             {
                 claims.Add(Claim.Parse(line));
             }
 
-            var allPoints = claims.SelectMany(c => c.Points)
-                .GroupBy(p => p.X)
-                .OrderBy(g => g.Key);
-
-            foreach (var xGrouping in allPoints)
-            {
-                List<int> Ys = new List<int>();
-                foreach (var p in xGrouping)
-                {
-                    if (Ys.Contains(p.Y) && !conflictedPoints.Contains(p))
-                    {
-                        conflictedPoints.Add(p);
-                    }
-                    else
-                    {
-                        Ys.Add(p.Y);
-                    }
-                }
-            }
-
-            return conflictedPoints.Distinct().Count();
+            return claims.SelectMany(x => x.Points).GroupBy(g => (g.X, g.Y)).Count(x => x.Count() > 1);
         }       
     }
 
@@ -52,35 +29,16 @@ namespace AdventOfCode.Tasks
         public int TaskNumber => 2;
         public object Execute()
         {
-            var claims = new List<Claim>();
+            var claims = new HashSet<Claim>();
 
             foreach (var line in Manifest.Day3.Split("\r\n"))
             {
                 claims.Add(Claim.Parse(line));
             }
 
-            foreach (var claim in claims)
-            {
-                bool clash = false;
-                foreach (var innerClaim in claims)
-                {
-                    if (claim.ClaimId != innerClaim.ClaimId)
-                    {
-                        if (innerClaim.Points.Any(x => claim.Points.Any(p => p.X == x.X && p.Y == x.Y)))
-                        {
-                            clash = true;
-                            break;
-                        }
-                    }
-                }
+            var singleUnclaimedPoints = claims.SelectMany(x => x.Points).GroupBy(g => (g.X, g.Y)).Where(x => x.Count() == 1).Select(x => new Point(x.Key.Item1, x.Key.Item2)).ToHashSet();
 
-                if (!clash)
-                {
-                    return claim.ClaimId;
-                }
-            }
-
-            return "ERROR";
+            return claims.Single(c => c.Points.All(p => singleUnclaimedPoints.Contains(p))).ClaimId;
         }
     }
 
