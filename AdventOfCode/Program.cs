@@ -23,6 +23,10 @@ namespace AdventOfCode
 
         static void Main(string[] args)
         {
+            Console.Title = "Advent of Code 2018";
+
+            HiddenTask.Init();
+
             Load();
 
             SelectDay();
@@ -84,7 +88,7 @@ namespace AdventOfCode
                     Console.ForegroundColor = ConsoleColor.Yellow;
                 }
 
-                Console.WriteLine($"[{(_selectedDay == task.Day ? "*" : string.Empty)}] - Day {task.Day}");
+                Console.WriteLine($"[{(_selectedDay == task.Day ? "*" : " ")}] - Day {task.Day}");
 
                 Console.ResetColor();
             }
@@ -103,7 +107,7 @@ namespace AdventOfCode
                     Console.ForegroundColor = ConsoleColor.Yellow;
                 }
 
-                Console.WriteLine($"[{(_selectedTask == task.TaskNumber ? "*" : string.Empty)}] - Task {task.TaskNumber}");
+                Console.WriteLine($"[{(_selectedTask == task.TaskNumber ? "*" : " ")}] - Task {task.TaskNumber}");
 
                 Console.ResetColor();
             }
@@ -174,6 +178,9 @@ namespace AdventOfCode
                             quitting = true;
                         }
                         break;
+                    case ConsoleKey.T:
+                        HiddenTask.Run();
+                        break;
                 }
             }
         }
@@ -210,6 +217,9 @@ namespace AdventOfCode
                         break;
                     case ConsoleKey.Backspace:
                         back = true;
+                        break;
+                    case ConsoleKey.T:
+                        HiddenTask.Run();
                         break;
                 }
             }
