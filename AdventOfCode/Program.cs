@@ -15,21 +15,27 @@ namespace AdventOfCode
 
         private static readonly Stopwatch Stopwatch = new Stopwatch();
 
+        private static int _selectedYear = 2018;
+
         private static int _selectedDay = 1;
 
         private static int _selectedTask = 1;
 
-        private static int _maxDays = 0;
+        private static int _minDays;
+
+        private static int _maxDays;
+
+        private static int _minYears;
+
+        private static int _maxYears;
 
         static void Main(string[] args)
         {
-            Console.Title = "Advent of Code 2018";
-
-            HiddenTask.Init();
+            Console.Title = "Advent of Code";
 
             Load();
 
-            SelectDay();
+            SelectYear();
         }
 
         static void StartTaskWithInstrumentation(ITask task)
@@ -38,7 +44,7 @@ namespace AdventOfCode
             {
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"Executing Day {task.Day}, Task {task.TaskNumber}...");
+                Console.WriteLine($"Executing Year {task.Year} Day {task.Day}, Task {task.TaskNumber}...");
 
                 Stopwatch.Start();
 
@@ -64,7 +70,7 @@ namespace AdventOfCode
             catch (Exception e)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"\r\nAn error occured during the running of Day {task.Day}, Task {task.TaskNumber}:\r\n\r\n{e}");
+                Console.WriteLine($"\r\nAn error occured during the running of Year {task.Year} Day {task.Day}, Task {task.TaskNumber}:\r\n\r\n{e}");
             }
             finally
             {
@@ -74,11 +80,34 @@ namespace AdventOfCode
             }
         }
 
+        static void DrawYearMenu()
+        {
+            DrawHeader("year");
+
+            foreach (var year in Tasks
+                .Select(x => x.Year)
+                .Distinct()
+                .OrderBy(x => x))
+            {
+                if (_selectedYear == year)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                }
+
+                Console.WriteLine($"[{(_selectedYear == year ? "*" : " ")}] - Year {year}");
+
+                Console.ResetColor();
+            }
+
+            DrawFooter();
+        }
+
         static void DrawDayMenu()
         {
             DrawHeader("day");
 
             foreach (var task in Tasks
+                .Where(x => x.Year == _selectedYear)
                 .GroupBy(x => x.Day)
                 .Select(x => x.First())
                 .OrderBy(x => x.Day))
@@ -100,7 +129,8 @@ namespace AdventOfCode
         {
             DrawHeader("task");
 
-            foreach (var task in Tasks.Where(x => x.Day == _selectedDay))
+            foreach (var task in Tasks
+                .Where(x => x.Year == _selectedYear && x.Day == _selectedDay))
             {
                 if (_selectedTask == task.TaskNumber)
                 {
@@ -142,33 +172,33 @@ namespace AdventOfCode
             Console.ResetColor();
         }
 
-        static void SelectDay()
+        static void SelectYear()
         {
             bool quitting = false;
             while (!quitting)
             {
                 Console.Clear();
-                DrawDayMenu();
+                DrawYearMenu();
 
                 var key = Console.ReadKey(true);
                 switch (key.Key)
                 {
                     case ConsoleKey.UpArrow:
-                        _selectedDay--;
-                        if (_selectedDay < 1)
+                        _selectedYear--;
+                        if (_selectedYear < _minYears)
                         {
-                            _selectedDay = _maxDays;
+                            _selectedYear = _maxYears;
                         }
                         break;
                     case ConsoleKey.DownArrow:
-                        _selectedDay++;
-                        if (_selectedDay > _maxDays)
+                        _selectedYear++;
+                        if (_selectedYear > _maxYears)
                         {
-                            _selectedDay = 1;
+                            _selectedYear = _minYears;
                         }
                         break;
                     case ConsoleKey.Enter:
-                        SelectTask();
+                        SelectDay();
                         break;
                     case ConsoleKey.Q:
                         Console.WriteLine("Are you sure you want to Quit? Y/N");
@@ -178,8 +208,40 @@ namespace AdventOfCode
                             quitting = true;
                         }
                         break;
-                    case ConsoleKey.T:
-                        HiddenTask.Run();
+                }
+            }
+        }
+
+        static void SelectDay()
+        {
+            bool back = false;
+            while (!back)
+            {
+                Console.Clear();
+                DrawDayMenu();
+
+                var key = Console.ReadKey(true);
+                switch (key.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        _selectedDay--;
+                        if (_selectedDay < _minDays)
+                        {
+                            _selectedDay = _maxDays;
+                        }
+                        break;
+                    case ConsoleKey.DownArrow:
+                        _selectedDay++;
+                        if (_selectedDay > _maxDays)
+                        {
+                            _selectedDay = _minDays;
+                        }
+                        break;
+                    case ConsoleKey.Enter:
+                        SelectTask();
+                        break;
+                    case ConsoleKey.Backspace:
+                        back = true;
                         break;
                 }
             }
@@ -212,14 +274,11 @@ namespace AdventOfCode
                         break;
                     case ConsoleKey.Enter:
                         StartTaskWithInstrumentation(Tasks.SingleOrDefault(x =>
-                            x.Day == _selectedDay && x.TaskNumber == _selectedTask));
+                            x.Year == _selectedYear && x.Day == _selectedDay && x.TaskNumber == _selectedTask));
                         back = true;
                         break;
                     case ConsoleKey.Backspace:
                         back = true;
-                        break;
-                    case ConsoleKey.T:
-                        HiddenTask.Run();
                         break;
                 }
             }
@@ -235,7 +294,13 @@ namespace AdventOfCode
                 Tasks.Add((ITask)Activator.CreateInstance(t));
             }
 
-            _maxDays = Tasks.GroupBy(x => x.Day).Count();
+            _minDays = Tasks.Min(x => x.Day);
+
+            _maxDays = Tasks.Max(x => x.Day);
+
+            _minYears = Tasks.Min(x => x.Year);
+
+            _maxYears = Tasks.Max(x => x.Year);
         }
     }
 }
